@@ -1031,12 +1031,19 @@ in
     (skipCheck "All tests that fail are meant to fail")
   ])
 
+  (for pkgs.ntl [
+    (pin "11.6.0" "sha256-vA75rOsHWmoGc6yNj0fV+EWMcv6AbkRo+9XT2v8FYYI=")
+    (use {
+      sourceRoot = "ntl-11.6.0/src";
+    })
+    (skipCheck "Way too slow")
+  ])
+
   (for pkgs.flint [
     (pin "3.4.0" "sha256-lJdnmATerZJuOv/rjUxYc50cdoTWDCwSgnVQ0o5FSjM=")
     (patch ./ports/patch/flint-3.4.0.patch)
     (arg {
       withBlas = false;
-      withNtl = false;
     })
     (use {
       postPatch = ''
