@@ -1024,6 +1024,13 @@ in
     ];
   }
 
+  # Math & Science
+
+  (for pkgs.mpfr [
+    (addCFlag "-DLONGLONG_STANDALONE -DNO_ASM")
+    (skipCheck "All tests that fail are meant to fail")
+  ])
+
   # ━━━ Broken / WIP ━━━
 
   (for pkgs.colm [
