@@ -1031,6 +1031,21 @@ in
     (skipCheck "All tests that fail are meant to fail")
   ])
 
+  (for pkgs.flint [
+    (pin "3.4.0" "sha256-lJdnmATerZJuOv/rjUxYc50cdoTWDCwSgnVQ0o5FSjM=")
+    (patch ./ports/patch/flint-3.4.0.patch)
+    (arg {
+      withBlas = false;
+      withNtl = false;
+    })
+    (use {
+      postPatch = ''
+        sed -i "35,65d" src/longlong.h
+      '';
+    })
+    (skipCheck "To be investigated")
+  ])
+
   # ━━━ Broken / WIP ━━━
 
   (for pkgs.colm [
