@@ -1,0 +1,32 @@
+diff --git a/src/neogb/la_ff_32.c b/src/neogb/la_ff_32.c
+index 9977301..34dd9aa 100644
+--- a/src/neogb/la_ff_32.c
++++ b/src/neogb/la_ff_32.c
+@@ -2428,7 +2428,12 @@ static void probabilistic_sparse_reduced_echelon_form_ff_32(
+                     }
+                     cfs = mat->cf_32[npiv[COEFFS]];
+                     sc  = npiv[OFFSET];
+-                    k   = __sync_bool_compare_and_swap(&pivs[npiv[OFFSET]], NULL, npiv);
++                    if (pivs[npiv[OFFSET]] == NULL) {
++                        pivs[npiv[OFFSET]] = npiv;
++                        k = 1;
++                    } else {
++                        k = 0;
++                    }
+                 } while (!k);
+                 bctr++;
+             }
+@@ -2683,7 +2688,12 @@ static void exact_sparse_reduced_echelon_form_ff_32(
+                         normalize_sparse_matrix_row_ff_32(
+                                 mat->cf_32[npiv[COEFFS]], npiv[PRELOOP], npiv[LENGTH], st->fc);
+                     }
+-                    k   = __sync_bool_compare_and_swap(&pivs[npiv[OFFSET]], NULL, npiv);
++                    if (pivs[npiv[OFFSET]] == NULL) {
++                        pivs[npiv[OFFSET]] = npiv;
++                        k = 1;
++                    } else {
++                        k = 0;
++                    }
+                     cfs = mat->cf_32[npiv[COEFFS]];
+                 }
+             } while (!k);
