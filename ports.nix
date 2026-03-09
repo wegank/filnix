@@ -1041,16 +1041,21 @@ in
   ])
 
   (for pkgs.flint [
-    (pin "3.4.0" "sha256-lJdnmATerZJuOv/rjUxYc50cdoTWDCwSgnVQ0o5FSjM=")
     (patch ./ports/patch/flint-3.4.0.patch)
     (arg {
       withBlas = false;
     })
-    (use {
-      postPatch = ''
-        sed -i "35,65d" src/longlong.h
-      '';
-    })
+    (use (old: {
+      pname = "flint";
+      version = "3.4.0-unstable-2025-03-09";
+      src = pkgs.fetchFromGitHub {
+        owner = "flintlib";
+        repo = "flint";
+        rev = "383453d37eab5d16d8f7a27fcfd38561d72bbf2d";
+        hash = "sha256-cKKdUhNS14d3djmnJs49lXz8BjeaqZvi+QLiShHULc8=";
+      };
+    }))
+    (configure "--disable-assembly")
     (skipCheck "To be investigated")
   ])
 
