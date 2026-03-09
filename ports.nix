@@ -1061,17 +1061,13 @@ in
 
   (for pkgs.msolve [
     (use {
-      version = "0.9.4-unstable-2026-03-02";
+      version = "0.9.4-unstable-2026-03-08";
       src = pkgs.fetchFromGitHub {
         owner = "algebraic-solving";
         repo = "msolve";
-        rev = "452effa5b4745a83d8d64f957d4a53df8cfae868";
-        hash = "sha256-Efq+Y9Fqr60UUPWVO62fHOKeA70vWcEeU4Nzf4qHOnk=";
+        rev = "ff6fb15ac785376a0d62f4820d5d87526a2e2e84";
+        hash = "sha256-gjiIHFGppriNgHfSPIB5WAOEO5nBLcL8NqS+K51McoM=";
       };
-      postPatch = ''
-        substituteInPlace src/msolve/main.c \
-          --replace-fail "fopen(files->bin_file, \"r\")" "NULL";
-      '';
     })
     (patch ./ports/patch/msolve-0.9.4.patch)
     (skipCheck "To be investigated")
